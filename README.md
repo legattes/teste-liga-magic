@@ -9,3 +9,7 @@
 
 * CRIAR BD COM O ARQUIVO database\database.sql
 * CONFIGURAR LOGIN E SENHA DO BD NO .env
+
+#  Para enviar requisição para a API #
+
+* Requisição GET com os parâmetros produto_nome e user_token

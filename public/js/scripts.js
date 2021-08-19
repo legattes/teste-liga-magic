@@ -4,7 +4,10 @@ $('#card-form').submit(function (e) {
         url: "/api/produto",
         type: 'get',
         contentType: 'application/json; charset=uft-8',
-        data: $('form#card-form').serialize(),
+        data: {
+            'produto_nome': $('#produto_nome').val(),
+            'user_token': btoa($('#user_token').val())
+        },
         cache: false
     }).done(function (Response) {
         if (Response.responseJSON) {

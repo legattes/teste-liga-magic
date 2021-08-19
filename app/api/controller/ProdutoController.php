@@ -6,29 +6,20 @@ class ProdutoController
     {
         header('Content-Type: application/json; charset: utf-8');
 
-        if (
-            !isset($args['produto_nome']) || $args['produto_nome'] == ''
-        ) {
+        if (!$args['produto_nome']) {
             echo json_encode(['jsonError' => 'É necessário inserir um nome']);
-            return http_response_code(404);
+            http_response_code(404);
+            die();
         }
 
-        $nome = $args['produto_nome'];
-        $produto = new ProdutoModel();
-
-        $produto = $produto->get($nome);
+        $produto = (new ProdutoModel())->get($args['produto_nome']);
 
         if (!$produto) {
             echo json_encode(['jsonError' => 'Não encontrada']);
-            return http_response_code(404);
+            http_response_code(404);
+            die();
         }
 
         echo json_encode($produto);
-    }
-
-    public function post($args = [])
-    {
-        print_r($args);
-        die();
     }
 }

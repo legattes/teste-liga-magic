@@ -4,18 +4,20 @@ require_once("Model.php");
 
 class ClienteModel extends Model
 {
-    //falta arrumar
-    public function validateToken($token){
+    public function validateToken($token)
+    {
         $query = "SELECT * FROM Cliente WHERE cliente_token = :token";
-
         $stmt = $this->db->prepare($query);
+        $stmt->bindValue('token', utf8_encode($token));
 
-        $stmt->bindValue('token', $token);
+        $stmt->execute();
 
-        if ($stmt->execute()) {
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        } else {
-            echo 'erro';
+        if ($stmt->errorCode() > 0) {
+            echo json_encode(['jsonError' => 'Erro no servidor']);
+            http_response_code(404);
+            die();
         }
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }

@@ -21,11 +21,11 @@
                 <form id="card-form" action="">
                     <div class="mb-3">
                         <label for="produto_nome" class="form-label">Nome da carta</label>
-                        <input type="text" class="form-control" name="produto_nome">
+                        <input type="text" class="form-control" id="produto_nome" name="produto_nome">
                     </div>
                     <div class="mb-3">
                         <label for="user_token" class="form-label">Token da API</label>
-                        <input type="text" class="form-control" name="user_token">
+                        <input type="text" class="form-control" id="user_token" name="user_token">
                     </div>
                     <button type="submit" id="btn-submit" class="btn btn-primary">Procurar</button>
                 </form>
