@@ -1,3 +1,7 @@
+CREATE DATABASE ligamagic;
+
+USE ligamagic;
+
 CREATE TABLE Cliente(
     cliente_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     cliente_nome VARCHAR(250) NOT NULL,

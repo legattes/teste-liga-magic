@@ -9,6 +9,7 @@
 
 * Criar o BD com o arquivo 'database\database.sql'
 * Configurar LOGIN e SENHA do BD no arquivo '.env'
+* Habilitar o 'extension=pdo_mysql' no php.ini
 
 #  Para enviar requisição para a API #
 
