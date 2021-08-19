@@ -1,9 +1,10 @@
 <?php
 
+require_once("../app/Database.php");
+require_once("../app/model/ClienteModel.php");
+require_once("../app/model/ProdutoModel.php");
 require_once("../app/api/controller/ProdutoController.php");
 require_once("../app/controller/SearchController.php");
-require_once("../app/model/ProdutoModel.php");
-require_once("../app/Database.php");
 
 class Route
 {
@@ -22,18 +23,42 @@ class Route
         }
 
         $controller = ucwords(array_shift($url));
-        $args = json_decode(file_get_contents('php://input'), true) ?? [];
+        $args = array_merge($_POST ?? [], $_GET ?? [], json_decode(file_get_contents('php://input'), true) ?? []);
 
         switch ($controller) {
             case '404':
-                echo 'não suportado';
+                header('Content-Type: application/json; charset: utf-8');
+                echo json_encode('não suportado');
+                return http_response_code(404);
                 break;
             default:
+                if ($api) {
+                    header('Content-Type: application/json; charset: utf-8');
+                    $token = $args['user_token'];
+
+                    if (!$token) {
+                        echo json_encode(['jsonError' => 'É necessário autorizar utilizando um token']);
+                        return http_response_code(404);
+                    }
+
+                    $clienteApi = new ClienteModel();
+                    $valid = $clienteApi->validateToken($token);
+
+                    if (!$valid) {
+                        echo json_encode(['jsonError' => 'Token inválido']);
+                        return http_response_code(404);
+                    }
+                }
+
                 if (empty($controller) || $controller == '') {
                     $controller = 'Search';
                 }
-                $controller = "{$controller}Controller";
 
+                if (strpos($controller, '?') > 0) {
+                    $controller = explode('?', $controller)[0];
+                }
+
+                $controller = "{$controller}Controller";
                 $fileController = "..\\app\\" . ($api ? 'api\\' : '') . "controller\\" . $controller . ".php";
 
                 if (file_exists($fileController)) {
@@ -41,15 +66,18 @@ class Route
                 } else {
                     self::errorPage();
                 }
+
                 if (is_object($controller)) {
-                    return $controller->$method($args);
-                } else {
-                    self::errorPage();
-                }
+                    if (method_exists($controller, $method)) {
+                        return $controller->$method($args);
+                    }
+                } 
+
+                return self::errorPage();
         }
     }
 
-    public static function errorPage()
+    protected static function errorPage()
     {
         return header('Location: /404');
     }
