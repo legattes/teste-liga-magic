@@ -2,7 +2,8 @@
 
 class Database
 {
-    public function connect(){
+    public function connect()
+    {
         $file = file("../.env");
 
         $user = trim(explode('LOGIN=', $file[0])[1]);
@@ -15,6 +16,4 @@ class Database
 
         return $db;
     }
-
-
 }

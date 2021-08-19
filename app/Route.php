@@ -22,7 +22,7 @@ class Route
         }
 
         $controller = ucwords(array_shift($url));
-        $args = array_merge($_POST, json_decode(file_get_contents('php://input'), true));
+        $args = json_decode(file_get_contents('php://input'), true) ?? [];
 
         switch ($controller) {
             case '404':
@@ -41,7 +41,6 @@ class Route
                 } else {
                     self::errorPage();
                 }
-
                 if (is_object($controller)) {
                     return $controller->$method($args);
                 } else {

@@ -1,10 +1,11 @@
 <?php
 
-class Model 
+class Model
 {
     protected $db;
 
-    public function __construct (){        
+    public function __construct()
+    {
         $this->db = (new Database())->connect();
     }
 }
