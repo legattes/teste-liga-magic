@@ -68,14 +68,16 @@ class Route
             http_response_code(404);
             die();
         }
+        
+        if(base64_decode($token, true)){
+            $token = base64_decode($token);
+        }
 
         //valida se o token existe
         if (!(new ClienteModel())->validateToken($token)) {
-            if (!(new ClienteModel())->validateToken(base64_decode($token))) {
-                echo json_encode(['jsonError' => 'Token inválido']);
-                http_response_code(404);
-                die();
-            }
+            echo json_encode(['jsonError' => 'Token inválido']);
+            http_response_code(404);
+            die();
         }
     }
 

@@ -3,7 +3,7 @@
 # VERSÕES #
 
 * PHP 7.4.22
-* MySql 5.7
+* MySQL 5.7
 
 # CONFIGURAÇÕES #
 
