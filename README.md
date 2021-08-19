@@ -7,9 +7,9 @@
 
 # CONFIGURAÇÕES #
 
-* CRIAR BD COM O ARQUIVO database\database.sql
-* CONFIGURAR LOGIN E SENHA DO BD NO .env
+* Criar o BD com o arquivo 'database\database.sql'
+* Configurar LOGIN e SENHA do BD no arquivo '.env'
 
 #  Para enviar requisição para a API #
 
-* Requisição GET com os parâmetros produto_nome e user_token
+* Requisição GET para /api/produto com os parâmetros produto_nome e user_token
